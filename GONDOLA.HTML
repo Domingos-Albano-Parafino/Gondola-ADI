@@ -1,0 +1,719 @@
+<!doctype html>
+<html lang="pt-MZ">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Assembleia de Deus - Internacional</title>
+    <style>
+        :root {
+            --blue: #0b61d6;
+            --soft: #f5f8ff;
+            --muted: #6b7280;
+            --card-radius: 16px;
+            --glass: rgba(255, 255, 255, 0.8);
+            --accent: #0b61d6;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            margin: 0;
+            background: linear-gradient(180deg, #eef6ff 0%, #ffffff 100%);
+            color: #111
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px;
+            background: linear-gradient(90deg, var(--blue), #3aa0ff);
+            color: white
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo .badge {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--blue);
+            font-size: 22px;
+            box-shadow: 0 6px 18px rgba(11, 97, 214, 0.18)
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        nav {
+            margin-left: auto;
+            display: flex;
+            gap: 10px
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08)
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1100px;
+            margin: 20px auto
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 18px;
+            align-items: start
+        }
+
+        .card {
+            background: var(--glass);
+            border-radius: var(--card-radius);
+            padding: 16px;
+            box-shadow: 0 6px 18px rgba(12, 34, 60, 0.06)
+        }
+
+        .welcome h1 {
+            margin: 0;
+            font-size: 22px;
+            color: var(--blue)
+        }
+
+        .verse {
+            margin-top: 8px;
+            color: var(--muted)
+        }
+
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+
+        .event-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 10px;
+            border-radius: 12px;
+            background: white
+        }
+
+        .event-item .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--blue)
+        }
+
+        /* fotos tipo passe */
+        .past-photos {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .past-photos .passe {
+            width: 96px;
+            height: 120px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid rgba(11, 97, 214, 0.12);
+            background: #fff
+        }
+
+        .passe img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        /* biografia pastores */
+        .pastors {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px
+        }
+
+        .pastor {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 12px
+        }
+
+        .pastor .photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .pastor .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        /* programas */
+        .programs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px
+        }
+
+        .programs .prog {
+            padding: 12px;
+            border-radius: 12px;
+            background: white
+        }
+
+        /* ofertas e dizimos */
+        .gifts {
+            display: flex;
+            gap: 12px
+        }
+
+        .gifts .box {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            border-radius: 12px
+        }
+
+        /* gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform .45s;
+            cursor: pointer
+        }
+
+        .gallery img:hover {
+            transform: scale(1.06) rotate(-1deg)
+        }
+
+        /* cadastro membros */
+        .members {
+            margin-top: 12px
+        }
+
+        form input,
+        form select,
+        form button,
+        .event-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 10px;
+            border: 1px solid #e6eefc
+        }
+
+        .member-list {
+            margin-top: 12px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #f1f5f9
+        }
+
+        td.actions {
+            display: flex;
+            gap: 8px
+        }
+
+        .btn {
+            padding: 8px 10px;
+            border-radius: 10px;
+            border: 0;
+            cursor: pointer
+        }
+
+        .btn.primary {
+            background: var(--blue);
+            color: white
+        }
+
+        .btn.warn {
+            background: #f59e0b;
+            color: white
+        }
+
+        .btn.danger {
+            background: #ef4444;
+            color: white
+        }
+
+        /* calendar */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px
+        }
+
+        .calendar .day {
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            min-height: 80px
+        }
+
+        .calendar .day .date {
+            font-weight: 700
+        }
+
+        .calendar .day.event {
+            box-shadow: 0 4px 14px rgba(11, 97, 214, 0.08);
+            border: 2px solid rgba(11, 97, 214, 0.06)
+        }
+
+        /* responsive */
+        @media(max-width:1000px) {
+            .hero {
+                grid-template-columns: 1fr
+            }
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr)
+            }
+
+            .pastors {
+                grid-template-columns: 1fr
+            }
+
+            .programs {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:600px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px
+            }
+        }
+
+        footer {
+            padding: 16px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <div class="badge">ADI</div>
+            <div>
+                <div class="title">Assembleia de Deus - Internacional-Manica Bloco IV</div>
+                <div style="font-size:12px;opacity:0.95">Gondola, Moçambique</div>
+            </div>
+        </div>
+        <nav>
+            <a href="#welcome">Início</a>
+            <a href="#programs">Programas</a>
+            <a href="#members">Membros</a>
+            <a href="#events">Eventos</a>
+            <a href="#gallery">Galeria</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <div class="card welcome" id="welcome">
+                <h1>Seja bem-vindo(a) à Assembleia de Deus - Internacional-Distrito de Gondola Provincia de Manica Bloco 4</h1>
+                <p class="verse">"O Senhor te abençoe e te guarde." — Números 6:24  --Seja muito bem-vindo à Assembleia de Deus Internacional (ADI)!
+                É uma alegria receber você na Casa do Senhor, lugar de adoração, esperança e transformação.
+                Aqui proclamamos o nome de Jesus Cristo e anunciamos a mensagem que salva, cura, liberta e restaura vidas.
+                
+                "Alegrei-me quando me disseram: Vamos à Casa do Senhor." — Salmos 122:1
+                
+                Que a paz de Deus encha o seu coração, que o Espírito Santo fale profundamente à sua alma, e que este culto seja um
+                tempo de renovação espiritual e comunhão fraterna.
+                Sinta-se amado, acolhido e parte da família ADI.
+                Estamos felizes por ter você conosco!
+                
+                Assembleia de Deus Internacional —
+                Lugar de fé, adoração e transformação.</p>
+
+                <h3 style="margin-top:14px;color:var(--blue)">Destaques</h3>
+                <div class="events" id="events-list">
+                    <!-- Eventos dinâmicos -->
+                </div>
+
+                <h3 style="margin-top:14px;color:var(--blue)">Fotos dos Pastores</h3>
+                <div class="past-photos">
+                    <!-- substitua as srcs abaixo com as suas imagens -->
+                    <div class="passe"><img src="placeholder_pass_1.jpg" alt="Foto Passe 2"></div>
+                    <div class="passe"><img src="placeholder_pass_2.jpg" alt="Foto Passe 2"></div>
+                    <div class="passe"><img src="placeholder_pass_3.jpg" alt="Foto Passe 3"></div>
+                    <div class="passe"><img src="placeholder_pass_4.jpg" alt="Foto Passe 4"></div>
+                </div>
+
+            </div>
+
+            <aside class="card">
+                <h3 style="color:var(--blue);margin:0">Contato & Localização</h3>
+                <p class="verse" style="margin:8px 0 12px 0">Av. Principal CPMZ, Distrito de Gondola — Provincia de Manica</p>
+                <div style="height:220px;overflow:hidden;border-radius:12px">
+                    <iframe src="https://www.google.com/maps?q=Gondola,+Mozambique&output=embed" width="100%"
+                        height="220" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+
+                <h4 style="margin-top:12px">Próximo Evento</h4>
+                <div id="next-event" style="padding:8px;background:#f8fbff;border-radius:10px;margin-top:8px">Nenhum
+                    evento marcado</div>
+            </aside>
+        </section>
+
+        <!-- Pastores -->
+        <section class="card" style="margin-top:16px">
+            <h2 style="margin:0;color:var(--blue)">Pastores</h2>
+            <p class="verse">Conheça a equipe pastoral</p>
+            <div class="pastors" id="pastors">
+                <!-- Pastores: substituir src e textos -->
+                <div class="pastor">
+                    <div class="photo"><img src="placeholder_pastor_1.jpg" alt="Pastor 2"></div>
+                    <div>
+                        <strong>Pr. Antoninho Joaquim</strong>
+                        <div style="font-size:13px;color:var(--muted)"> Pastor Provincial Bloco IV-Manica
+                            </div>
+                    </div>
+                </div>
+                <div class="pastor">
+                    <div class="photo"><img src="placeholder_pastor_2.jpg" alt="Pastor 2"></div>
+                    <div>
+                        <strong>Pr. Alberto Paulino Mairosse</strong>
+                        <p>Contactos: 846203778 ou 874639343</p>
+                        
+                        <div style="font-size:13px;color:var(--muted)">Pastor Local -Judá</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- programas -->
+        <section class="card" id="programs" style="margin-top:16px">
+            <h2 style="margin:0;color:var(--blue)">Programas</h2>
+            <div class="programs" style="margin-top:12px">
+                <div class="prog">
+                    <h4>Programa de Jovens</h4>
+                    <p class="verse">Encontros semanais de adoração, estudos e atividades sociais.</p>
+                </div>
+                <div class="prog">
+                    <h4>Programa dos Pais</h4>
+                    <p class="verse">Encontros e suporte para pais — aconselhamento e organizaçao.</p>
+                </div>
+                <div class="prog">
+                    <h4>Programa das Mães</h4>
+                    <p class="verse">Grupo de apoio, estudos bíblicos e eventos especiais para mães.</p>
+                </div>
+                <div class="prog">
+                    <h4>Programa Infantil</h4>
+                    <p class="verse">Acolhimento, ensino bíblico e actividades criativas para crianças.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top:12px;color:var(--blue)">Ofertas & Dízimos</h3>
+            <div class="gifts">
+                <div class="box">
+                    <h4>Ofertas</h4>
+                    <p class="verse">Contribua para os projetos da igreja.</p>
+                    <input id="offer-amount" placeholder="Montante da oferta (MZN)" />
+                    <button class="btn primary" onclick="recordGift('offer')">Registar Oferta</button>
+                </div>
+                <div class="box">
+                    <h4>Dízimos</h4>
+                    <p class="verse">Sustento do ministério pastoral.</p>
+                    <input id="tithe-amount" placeholder="Montante do dízimo (MZN)" />
+                    <button class="btn primary" onclick="recordGift('tithe')">Registar Dízimo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- galeria -->
+        <section class="card" id="gallery" style="margin-top:16px">
+            <h2 style="margin:0;color:var(--blue)">Galeria de Eventos</h2>
+            <p class="verse">Clique nas imagens para ampliar (substitua as imagens quando quiser).</p>
+            <div class="gallery" id="gallery-grid">
+                <img src="placeholder_event_1.jpg   " alt="Evento 1" onclick="showLightbox(this.src)">
+                <img src="placeholder_event_2.jpg" alt="Evento 2" onclick="showLightbox(this.src)">
+                <img src="placeholder_event_3.jpg" alt="Evento 3" onclick="showLightbox(this.src)">
+                <img src="placeholder_event_4.jpg" alt="Evento 4" onclick="showLightbox(this.src)">
+            </div>
+        </section>
+
+        <!-- estudo biblico e cadastro de membros -->
+        <section class="card members" id="members" style="margin-top:16px">
+            <h2 style="margin:0;color:var(--blue)">Estudo Bíblico & Cadastro de Membros</h2>
+            <p class="verse">Insira os dados dos membros — categorias disponíveis: Pastor, Jovem, Mãe, Escola do
+                Municar, Ancião, Evangelista.</p>
+
+            <form id="member-form" onsubmit="return addMember(event)">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <input id="m-name" placeholder="Nome completo" required />
+                    <input id="m-phone" placeholder="Telefone" />
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+                    <select id="m-category" required>
+                        <option value="">-- Categoria --</option>
+                        <option>Pastor</option>
+                        <option>Jovem</option>
+                        <option>Mãe</option>
+                        <option>Escola do Municar</option>
+                        <option>Ancião</option>
+                        <option>Evangelista</option>
+                    </select>
+                    <input id="m-email" placeholder="Email" />
+                </div>
+                <textarea id="m-notes" placeholder="Observações"
+                    style="margin-top:8px;padding:10px;border-radius:10px;border:1px solid #e6eefc"></textarea>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                    <button class="btn primary" type="submit">Guardar</button>
+                    <button class="btn" type="button" onclick="clearForm()">Limpar</button>
+                </div>
+            </form>
+
+            <div class="member-list">
+                <h3 style="margin-top:12px;color:var(--blue)">Listar Membros</h3>
+                <table id="members-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Categoria</th>
+                            <th>Contacto</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- calendario -->
+        <section class="card" style="margin-top:16px">
+            <h2 style="margin:0;color:var(--blue)">Calendário de Eventos</h2>
+            <p class="verse">Adicione e destaque eventos importantes.</p>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+                <div style="flex:1;min-width:260px">
+                    <div class="event-form">
+                        <input id="ev-title" placeholder="Título do evento" />
+                        <input id="ev-date" type="date" />
+                        <input id="ev-time" type="time" />
+                        <input id="ev-place" placeholder="Local" />
+                        <button class="btn primary" onclick="addEvent()">Adicionar Evento</button>
+                    </div>
+                </div>
+                <div style="flex:2;min-width:300px">
+                    <div id="calendar-grid" class="calendar" style="margin-top:8px"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        © Assembleia de Deus - Internacional — Distrito de Gondola.
+        <p>Contactos do administrador do sistema: 843753174/878348735</p>
+    </footer>
+
+    <!-- lightbox simples -->
+    <div id="lightbox"
+        style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:999">
+        <img id="lightbox-img" src=""
+            style="max-width:92%;max-height:92%;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.6)">
+    </div>
+
+    <script>
+        // Lightbox
+        function showLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightbox').style.display = 'flex' }
+        document.getElementById('lightbox').addEventListener('click', () => document.getElementById('lightbox').style.display = 'none')
+
+        // LocalStorage helpers
+        const storage = {
+            membersKey: 'adi_members_v1',
+            eventsKey: 'adi_events_v1',
+            giftsKey: 'adi_gifts_v1',
+            get(key) { try { return JSON.parse(localStorage.getItem(key) || '[]') } catch (e) { return [] } },
+            set(key, val) { localStorage.setItem(key, JSON.stringify(val)) }
+        }
+
+        // Members management
+        function renderMembers() {
+            const tbody = document.querySelector('#members-table tbody'); tbody.innerHTML = '';
+            const members = storage.get(storage.membersKey);
+            members.forEach((m, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${escapeHtml(m.name)}</td><td>${escapeHtml(m.category)}</td><td>${escapeHtml(m.phone || '')}</td><td>${escapeHtml(m.email || '')}</td>
+          <td class='actions'>
+            <button class='btn' onclick='editMember(${i})'>Editar</button>
+            <button class='btn danger' onclick='removeMember(${i})'>Remover</button>
+          </td>`;
+                tbody.appendChild(tr);
+            })
+        }
+        function addMember(e) {
+            if (e) e.preventDefault();
+            const name = document.getElementById('m-name').value.trim();
+            const phone = document.getElementById('m-phone').value.trim();
+            const category = document.getElementById('m-category').value;
+            const email = document.getElementById('m-email').value.trim();
+            const notes = document.getElementById('m-notes').value.trim();
+            if (!name || !category) return alert('Por favor preencha o nome e categoria.');
+            const members = storage.get(storage.membersKey);
+            members.push({ name, phone, category, email, notes, created: Date.now() });
+            storage.set(storage.membersKey, members);
+            renderMembers(); clearForm();
+        }
+        function clearForm() { document.getElementById('member-form').reset() }
+        function editMember(i) {
+            const members = storage.get(storage.membersKey);
+            const m = members[i]; if (!m) return;
+            document.getElementById('m-name').value = m.name;
+            document.getElementById('m-phone').value = m.phone || '';
+            document.getElementById('m-category').value = m.category || '';
+            document.getElementById('m-email').value = m.email || '';
+            document.getElementById('m-notes').value = m.notes || '';
+            // remove old entry and let user save updated
+            members.splice(i, 1);
+            storage.set(storage.membersKey, members);
+            renderMembers();
+        }
+        function removeMember(i) { if (!confirm('Remover este membro?')) return; const members = storage.get(storage.membersKey); members.splice(i, 1); storage.set(storage.membersKey, members); renderMembers() }
+
+        // Events management
+        function renderEvents() {
+            const container = document.getElementById('events-list'); container.innerHTML = '';
+            const events = storage.get(storage.eventsKey).sort((a, b) => new Date(a.date) - new Date(b.date));
+            events.slice(0, 5).forEach(ev => {
+                const el = document.createElement('div'); el.className = 'event-item';
+                el.innerHTML = `<div class='dot'></div><div><strong>${escapeHtml(ev.title)}</strong><div style='font-size:13px;color:#6b7280'>${formatDate(ev.date)} ${ev.time || ''} — ${escapeHtml(ev.place || '')}</div></div>`;
+                container.appendChild(el);
+            })
+            // next event
+            const next = events.find(ev => new Date(ev.date) >= (new Date()).setHours(0, 0, 0, 0));
+            document.getElementById('next-event').innerText = next ? `${next.title} — ${formatDate(next.date)} ${next.time || ''}` : 'Nenhum evento marcado';
+            renderCalendar();
+        }
+        function addEvent() {
+            const title = document.getElementById('ev-title').value.trim();
+            const date = document.getElementById('ev-date').value;
+            const time = document.getElementById('ev-time').value;
+            const place = document.getElementById('ev-place').value.trim();
+            if (!title || !date) return alert('Preencha o título e a data do evento.');
+            const events = storage.get(storage.eventsKey);
+            events.push({ title, date, time, place, id: Date.now() });
+            storage.set(storage.eventsKey, events);
+            document.getElementById('ev-title').value = ''; document.getElementById('ev-date').value = ''; document.getElementById('ev-time').value = ''; document.getElementById('ev-place').value = '';
+            renderEvents();
+        }
+
+        // Gifts
+        function recordGift(type) {
+            const input = type === 'offer' ? document.getElementById('offer-amount') : document.getElementById('tithe-amount');
+            const val = input.value.trim(); if (!val) return alert('Insira um valor.');
+            const gifts = storage.get(storage.giftsKey);
+            gifts.push({ type, amount: val, date: new Date().toISOString() });
+            storage.set(storage.giftsKey, gifts);
+            input.value = ''; alert('Registo efetuado.');
+        }
+
+        // Calendar visual
+        function renderCalendar() {
+            const grid = document.getElementById('calendar-grid'); grid.innerHTML = '';
+            const now = new Date();
+            const year = now.getFullYear(), month = now.getMonth();
+            const first = new Date(year, month, 1);
+            const startDay = first.getDay(); // 0=Sunday
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const events = storage.get(storage.eventsKey);
+
+            // render leading blanks
+            for (let i = 0; i < startDay; i++) { const el = document.createElement('div'); el.className = 'day'; el.innerHTML = ''; grid.appendChild(el) }
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                const dayEl = document.createElement('div'); dayEl.className = 'day';
+                const todays = events.filter(ev => ev.date === dateStr);
+                if (todays.length) dayEl.classList.add('event');
+                dayEl.innerHTML = `<div class='date'>${d}</div>` + todays.map(ev => `<div style='font-size:12px;margin-top:6px'>• ${escapeHtml(ev.title)}</div>`).join('');
+                grid.appendChild(dayEl);
+            }
+        }
+
+        // Utilities
+        function escapeHtml(s) { if (!s) return ''; return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;') }
+        function formatDate(d) { const dt = new Date(d); return dt.toLocaleDateString('pt-PT', { year: 'numeric', month: 'short', day: 'numeric' }) }
+
+        // Inicialização
+        (function init() {
+            renderMembers(); renderEvents();
+            // Seed example events if none
+            if (storage.get(storage.eventsKey).length === 0) {
+                storage.set(storage.eventsKey, [{ title: 'Culto de Domingo', date: new Date().toISOString().slice(0, 10), time: '09:00', place: 'Sede' }]);
+                renderEvents();
+            }
+        })();
+
+    </script>
+</body>
+
+</html>
