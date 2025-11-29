@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILLENNIUM BIM</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #d01450; /* Rosa */
+            color: #FFFF00; /* Amarelo */
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .login-container, .bank-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login-box {
+            background-color: #D81B60;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        
+        .login-box h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .login-box p {
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFA000;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-box button:hover {
+            background-color: #FFC107;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #D81B60;
+            border-radius: 10px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: #D81B60;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #FFC107;
+            padding-bottom: 10px;
+        }
+        
+        .menu-list {
+            list-style: none;
+        }
+        
+        .menu-list li {
+            margin-bottom: 15px;
+        }
+        
+        .menu-list button {
+            width: 100%;
+            padding: 10px;
+            background-color: #FFA000;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: left;
+        }
+        
+        .menu-list button:hover {
+            background-color: #FFC107;
+        }
+        
+        .content {
+            flex: 1;
+            background-color: #D81B60;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #FFC107;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #000;
+        }
+        
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #FFA000;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .form-group button:hover {
+            background-color: #FFC107;
+        }
+        
+        .account-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .account-list th, .account-list td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #FFC107;
+        }
+        
+        .account-list th {
+            background-color: #C2185B;
+        }
+        
+        .account-list tr:hover {
+            background-color: #C2185B;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .receipt {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-width: 500px;
+        }
+        
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .receipt-info {
+            margin-bottom: 15px;
+        }
+        
+        .receipt-info p {
+            margin-bottom: 5px;
+        }
+        
+        .receipt-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .service-btn {
+            padding: 15px;
+            background-color: #FFA000;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .service-btn:hover {
+            background-color: #FFC107;
+        }
+        
+        .history-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .history-list th, .history-list td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #FFC107;
+        }
+        
+        .history-list th {
+            background-color: #C2185B;
+        }
+        
+        .history-list tr:hover {
+            background-color: #C2185B;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <h1>MILLENNIUM BIM sistema bancario</h1>
+            <p>Bem-vindo ao Sistema Bancário Millennium BIM. Por favor, autentique-se para acessar sua conta.</p>
+            <p>Digite senha de acesso</p>
+            <input type="password" id="password" placeholder="Digite a senha">
+            <button onclick="login()">Acessar</button>
+        </div>
+    </div>
+    
+    <!-- Bank System -->
+    <div class="bank-container hidden" id="bankSystem">
+        <div class="header">
+            <h1>MILLENNIUM BIM SISTEMA BANCARIO</h1>
+        </div>
+        
+        <div class="main-content">
+            <!-- Sidebar Menu -->
+            <div class="sidebar">
+                <h2>Menu</h2>
+                <ul class="menu-list">
+                    <li><button onclick="showSection('createAccount')">Criar Conta</button></li>
+                    <li><button onclick="showSection('deposit')">Depósito</button></li>
+                    <li><button onclick="showSection('withdraw')">Levantamento</button></li>
+                    <li><button onclick="showSection('transfer')">Transferência</button></li>
+                    <li><button onclick="showSection('listAccounts')">Listar Contas</button></li>
+                    <li><button onclick="showSection('microcredit')">Microcrédito</button></li>
+                    <li><button onclick="showSection('paymentServices')">Serviços de Pagamento</button></li>
+                    <li><button onclick="showSection('clientHistory')">Histórico do Cliente</button></li>
+                    <li><button onclick="showSection('manageData')">Gerir Dados</button></li>
+                    <li><button onclick="logout()">Sair</button></li>
+                </ul>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="content">
+                <!-- Create Account Section -->
+                <div id="createAccount" class="section">
+                    <h2>Criar Nova Conta</h2>
+                    <div class="form-group">
+                        <label for="accountName">Nome do Titular:</label>
+                        <input type="text" id="accountName" placeholder="Digite o nome do titular">
+                    </div>
+                    <div class="form-group">
+                        <label for="accountBalance">Saldo Inicial:</label>
+                        <input type="number" id="accountBalance" placeholder="Digite o saldo inicial">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="createAccount()">Criar Conta</button>
+                    </div>
+                    <div id="accountCreatedMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                </div>
+                
+                <!-- Deposit Section -->
+                <div id="deposit" class="section hidden">
+                    <h2>Depósito</h2>
+                    <div class="form-group">
+                        <label for="depositAccount">Número da Conta:</label>
+                        <input type="text" id="depositAccount" placeholder="Digite o número da conta">
+                    </div>
+                    <div class="form-group">
+                        <label for="depositAmount">Valor do Depósito:</label>
+                        <input type="number" id="depositAmount" placeholder="Digite o valor">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="makeDeposit()">Efetuar Depósito</button>
+                    </div>
+                    <div id="depositMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                </div>
+                
+                <!-- Withdraw Section -->
+                <div id="withdraw" class="section hidden">
+                    <h2>Levantamento</h2>
+                    <div class="form-group">
+                        <label for="withdrawAccount">Número da Conta:</label>
+                        <input type="text" id="withdrawAccount" placeholder="Digite o número da conta">
+                    </div>
+                    <div class="form-group">
+                        <label for="withdrawAmount">Valor do Levantamento:</label>
+                        <input type="number" id="withdrawAmount" placeholder="Digite o valor">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="makeWithdrawal()">Efetuar Levantamento</button>
+                    </div>
+                    <div id="withdrawMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                </div>
+                
+                <!-- Transfer Section -->
+                <div id="transfer" class="section hidden">
+                    <h2>Transferência</h2>
+                    <div class="form-group">
+                        <label for="transferFrom">Conta de Origem:</label>
+                        <input type="text" id="transferFrom" placeholder="Digite o número da conta de origem">
+                    </div>
+                    <div class="form-group">
+                        <label for="transferTo">Conta de Destino:</label>
+                        <input type="text" id="transferTo" placeholder="Digite o número da conta de destino">
+                    </div>
+                    <div class="form-group">
+                        <label for="transferAmount">Valor da Transferência:</label>
+                        <input type="number" id="transferAmount" placeholder="Digite o valor">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="makeTransfer()">Efetuar Transferência</button>
+                    </div>
+                    <div id="transferMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                </div>
+                
+                <!-- List Accounts Section -->
+                <div id="listAccounts" class="section hidden">
+                    <h2>Lista de Contas</h2>
+                    <table class="account-list">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Titular</th>
+                                <th>Saldo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountsTableBody">
+                            <!-- Accounts will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Microcredit Section -->
+                <div id="microcredit" class="section hidden">
+                    <h2>Microcrédito</h2>
+                    <div class="form-group">
+                        <label for="microAccount">Número da Conta:</label>
+                        <input type="text" id="microAccount" placeholder="Digite o número da conta">
+                    </div>
+                    <div class="form-group">
+                        <label for="microAmount">Valor do Empréstimo:</label>
+                        <input type="number" id="microAmount" placeholder="Digite o valor">
+                    </div>
+                    <div class="form-group">
+                        <button onclick="requestMicrocredit()">Solicitar Empréstimo</button>
+                        <button onclick="payMicrocredit()" style="margin-left: 10px;">Pagar Empréstimo</button>
+                    </div>
+                    <div id="microcreditMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                    
+                    <h3 style="margin-top: 20px;">Empréstimos em Andamento</h3>
+                    <table class="history-list">
+                        <thead>
+                            <tr>
+                                <th>Conta</th>
+                                <th>Valor</th>
+                                <th>Data Empréstimo</th>
+                                <th>Data Devolução</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="microcreditTableBody">
+                            <!-- Microcredits will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Payment Services Section -->
+                <div id="paymentServices" class="section hidden">
+                    <h2>Serviços de Pagamento</h2>
+                    <div class="service-grid">
+                        <button class="service-btn" onclick="showPaymentForm('Água')">Água</button>
+                        <button class="service-btn" onclick="showPaymentForm('Credilec')">Credilec</button>
+                        <button class="service-btn" onclick="showPaymentForm('Dstv')">Dstv</button>
+                        <button class="service-btn" onclick="showPaymentForm('Zap')">Zap</button>
+                        <button class="service-btn" onclick="showPaymentForm('Gotv')">Gotv</button>
+                        <button class="service-btn" onclick="showPaymentForm('TmCel')">TmCel</button>
+                        <button class="service-btn" onclick="showPaymentForm('Vodacom')">Vodacom</button>
+                        <button class="service-btn" onclick="showPaymentForm('Movitel')">Movitel</button>
+                        <button class="service-btn" onclick="showPaymentForm('TMTL')">TMTL</button>
+                    </div>
+                    
+                    <div id="paymentForm" class="hidden" style="margin-top: 30px;">
+                        <h3 id="serviceTitle">Serviço</h3>
+                        <div class="form-group">
+                            <label for="paymentAccount">Número da Conta:</label>
+                            <input type="text" id="paymentAccount" placeholder="Digite o número da conta">
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentNumber">Número do Serviço (12 dígitos):</label>
+                            <input type="text" id="paymentNumber" placeholder="Digite o número do serviço" maxlength="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="paymentValue">Valor:</label>
+                            <input type="number" id="paymentValue" placeholder="Digite o valor">
+                        </div>
+                        <div class="form-group">
+                            <button onclick="makePayment()">Efetuar Pagamento</button>
+                        </div>
+                    </div>
+                    
+                    <div id="receiptContainer" class="hidden">
+                        <div id="receiptContent" class="receipt">
+                            <div class="receipt-header">
+                                <h2>MILLENNIUM BIM-GONDOLA</h2>
+                                <p>Recibo de Pagamento</p>
+                            </div>
+                            <div class="receipt-info">
+                                <p><strong>Serviço:</strong> <span id="receiptService"></span></p>
+                                <p><strong>Número:</strong> <span id="receiptNumber"></span></p>
+                                <p><strong>Valor:</strong> <span id="receiptAmount"></span> MZN</p>
+                                <p><strong>Data:</strong> <span id="receiptDate"></span></p>
+                                <p><strong>Hora:</strong> <span id="receiptTime"></span></p>
+                            </div>
+                            <div class="receipt-footer">
+                                <p>Obrigado por usar nossos serviços!</p>
+                                <p>Contacto: 878348735</p><p>DomingosAlbanoParafino@gmail.com</p>
+                            </div>
+                        </div>
+                        <button onclick="generatePDF()" style="margin-top: 15px;">Imprimir Recibo (PDF)</button>
+                    </div>
+                </div>
+                
+                <!-- Client History Section -->
+                <div id="clientHistory" class="section hidden">
+                    <h2>Histórico do Cliente</h2>
+                    <div class="form-group">
+                        <label for="historyAccount">Número da Conta:</label>
+                        <input type="text" id="historyAccount" placeholder="Digite o número da conta">
+                        <button onclick="loadHistory()" style="margin-top: 10px;">Carregar Histórico</button>
+                    </div>
+                    
+                    <table class="history-list">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- History will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Manage Data Section -->
+                <div id="manageData" class="section hidden">
+                    <h2>Gerir Dados</h2>
+                    <button onclick="saveData()" style="padding: 15px 20px; margin-bottom: 15px;">Guardar Dados no Navegador</button>
+                    <button onclick="clearData()" style="padding: 15px 20px; margin-bottom: 15px;">Apagar Todos os Dados</button>
+                    <div id="dataMsg" class="hidden" style="color: #00FF00; margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize variables
+        let currentService = '';
+        let accounts = [];
+        let microcredits = [];
+        let history = [];
+        let currentAccountNumber = '';
+        
+        // Check if there's saved data in localStorage
+        function loadSavedData() {
+            const savedAccounts = localStorage.getItem('bankAccounts');
+            const savedMicrocredits = localStorage.getItem('microcredits');
+            const savedHistory = localStorage.getItem('bankHistory');
+            
+            if (savedAccounts) {
+                accounts = JSON.parse(savedAccounts);
+            }
+            
+            if (savedMicrocredits) {
+                microcredits = JSON.parse(savedMicrocredits);
+            }
+            
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('bankAccounts', JSON.stringify(accounts));
+            localStorage.setItem('microcredits', JSON.stringify(microcredits));
+            localStorage.setItem('bankHistory', JSON.stringify(history));
+            
+            document.getElementById('dataMsg').textContent = 'Dados guardados com sucesso!';
+            document.getElementById('dataMsg').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('dataMsg').classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Clear all data from localStorage
+        function clearData() {
+            localStorage.removeItem('bankAccounts');
+            localStorage.removeItem('microcredits');
+            localStorage.removeItem('bankHistory');
+            
+            accounts = [];
+            microcredits = [];
+            history = [];
+            
+            document.getElementById('dataMsg').textContent = 'Todos os dados foram apagados!';
+            document.getElementById('dataMsg').classList.remove('hidden');
+            
+            // Clear tables
+            document.getElementById('accountsTableBody').innerHTML = '';
+            document.getElementById('microcreditTableBody').innerHTML = '';
+            document.getElementById('historyTableBody').innerHTML = '';
+            
+            setTimeout(() => {
+                document.getElementById('dataMsg').classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Login function
+        function login() {
+            const password = document.getElementById('password').value;
+            if (password === '843753174') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('bankSystem').classList.remove('hidden');
+                loadSavedData();
+                showSection('createAccount');
+            } else {
+                alert('Senha incorreta. Tente novamente.');
+            }
+        }
+        
+        // Logout function
+        function logout() {
+            document.getElementById('bankSystem').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('password').value = '';
+        }
+        
+        // Show specific section and hide others
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Load data if necessary
+            if (sectionId === 'listAccounts') {
+                loadAccountsTable();
+            } else if (sectionId === 'microcredit') {
+                loadMicrocreditsTable();
+            }
+        }
+        
+        // Create new account
+        function createAccount() {
+            const name = document.getElementById('accountName').value;
+            const balance = parseFloat(document.getElementById('accountBalance').value);
+            
+            if (!name || isNaN(balance)) {
+                alert('Por favor, preencha todos os campos corretamente.');
+                return;
+            }
+            
+            const accountNumber = generateAccountNumber();
+            accounts.push({
+                number: accountNumber,
+                name: name,
+                balance: balance
+            });
+            
+            // Add to history
+            const now = new Date();
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Abertura de Conta',
+                amount: balance,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Conta aberta com saldo inicial de ${balance} MZN`
+            });
+            
+            document.getElementById('accountCreatedMsg').textContent = `Conta criada com sucesso! Número da conta: ${accountNumber}`;
+            document.getElementById('accountCreatedMsg').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('accountName').value = '';
+            document.getElementById('accountBalance').value = '';
+            
+            setTimeout(() => {
+                document.getElementById('accountCreatedMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Generate unique account number
+        function generateAccountNumber() {
+            const min = 100000;
+            const max = 999999;
+            let accountNumber;
+            
+            do {
+                accountNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+            } while (accounts.some(acc => acc.number === accountNumber.toString()));
+            
+            return accountNumber.toString();
+        }
+        
+        // Make deposit
+        function makeDeposit() {
+            const accountNumber = document.getElementById('depositAccount').value;
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            account.balance += amount;
+            
+            // Add to history
+            const now = new Date();
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Depósito',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Depósito de ${amount} MZN`
+            });
+            
+            document.getElementById('depositMsg').textContent = `Depósito de ${amount} MZN realizado com sucesso na conta ${accountNumber}. Novo saldo: ${account.balance} MZN`;
+            document.getElementById('depositMsg').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('depositAccount').value = '';
+            document.getElementById('depositAmount').value = '';
+            
+            setTimeout(() => {
+                document.getElementById('depositMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Make withdrawal
+        function makeWithdrawal() {
+            const accountNumber = document.getElementById('withdrawAccount').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            if (amount > account.balance) {
+                alert('Saldo insuficiente.');
+                return;
+            }
+            
+            account.balance -= amount;
+            
+            // Add to history
+            const now = new Date();
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Levantamento',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Levantamento de ${amount} MZN`
+            });
+            
+            document.getElementById('withdrawMsg').textContent = `Levantamento de ${amount} MZN realizado com sucesso na conta ${accountNumber}. Novo saldo: ${account.balance} MZN`;
+            document.getElementById('withdrawMsg').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('withdrawAccount').value = '';
+            document.getElementById('withdrawAmount').value = '';
+            
+            setTimeout(() => {
+                document.getElementById('withdrawMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Make transfer
+        function makeTransfer() {
+            const fromAccountNumber = document.getElementById('transferFrom').value;
+            const toAccountNumber = document.getElementById('transferTo').value;
+            const amount = parseFloat(document.getElementById('transferAmount').value);
+            
+            const fromAccount = accounts.find(acc => acc.number === fromAccountNumber);
+            const toAccount = accounts.find(acc => acc.number === toAccountNumber);
+            
+            if (!fromAccount || !toAccount) {
+                alert('Uma ou ambas as contas não foram encontradas.');
+                return;
+            }
+            
+            if (fromAccountNumber === toAccountNumber) {
+                alert('Você não pode transferir para a mesma conta.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            if (amount > fromAccount.balance) {
+                alert('Saldo insuficiente para a transferência.');
+                return;
+            }
+            
+            fromAccount.balance -= amount;
+            toAccount.balance += amount;
+            
+            // Add to history for both accounts
+            const now = new Date();
+            history.push({
+                accountNumber: fromAccountNumber,
+                type: 'Transferência (Envio)',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Transferência para conta ${toAccountNumber}`
+            });
+            
+            history.push({
+                accountNumber: toAccountNumber,
+                type: 'Transferência (Recebimento)',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Transferência da conta ${fromAccountNumber}`
+            });
+            
+            document.getElementById('transferMsg').textContent = `Transferência de ${amount} MZN da conta ${fromAccountNumber} para ${toAccountNumber} realizada com sucesso.`;
+            document.getElementById('transferMsg').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('transferFrom').value = '';
+            document.getElementById('transferTo').value = '';
+            document.getElementById('transferAmount').value = '';
+            
+            setTimeout(() => {
+                document.getElementById('transferMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Load accounts table
+        function loadAccountsTable() {
+            const tableBody = document.getElementById('accountsTableBody');
+            tableBody.innerHTML = '';
+            
+            if (accounts.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="3" style="text-align: center;">Nenhuma conta cadastrada</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            accounts.forEach(account => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${account.number}</td>
+                    <td>${account.name}</td>
+                    <td>${account.balance} MZN</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Show payment form for specific service
+        function showPaymentForm(service) {
+            currentService = service;
+            document.getElementById('serviceTitle').textContent = service;
+            document.getElementById('paymentForm').classList.remove('hidden');
+            document.getElementById('receiptContainer').classList.add('hidden');
+        }
+        
+        // Make payment for service
+        function makePayment() {
+            const accountNumber = document.getElementById('paymentAccount').value;
+            const serviceNumber = document.getElementById('paymentNumber').value;
+            const amount = parseFloat(document.getElementById('paymentValue').value);
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            if (!serviceNumber || serviceNumber.length !== 12) {
+                alert('O número do serviço deve conter exatamente 12 dígitos.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            if (amount > account.balance) {
+                alert('Saldo insuficiente.');
+                return;
+            }
+            
+            account.balance -= amount;
+            
+            // Add to history
+            const now = new Date();
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Pagamento de Serviço',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Pagamento para ${currentService} (${serviceNumber})`
+            });
+            
+            // Show receipt
+            document.getElementById('receiptService').textContent = currentService;
+            document.getElementById('receiptNumber').textContent = serviceNumber;
+            document.getElementById('receiptAmount').textContent = amount;
+            document.getElementById('receiptDate').textContent = formatDate(now);
+            document.getElementById('receiptTime').textContent = formatTime(now);
+            
+            document.getElementById('paymentForm').classList.add('hidden');
+            document.getElementById('receiptContainer').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('paymentAccount').value = '';
+            document.getElementById('paymentNumber').value = '';
+            document.getElementById('paymentValue').value = '';
+        }
+        
+        // Generate PDF receipt
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Capture receipt content
+            html2canvas(document.getElementById('receiptContent')).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = doc.internal.pageSize.getWidth() - 20;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                doc.save(`Recibo_${currentService}_${formatDate(new Date())}.pdf`);
+            });
+        }
+        
+        // Request microcredit
+        function requestMicrocredit() {
+            const accountNumber = document.getElementById('microAccount').value;
+            const amount = parseFloat(document.getElementById('microAmount').value);
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            // Check if account already has an active microcredit
+            const activeCredit = microcredits.find(mc => 
+                mc.accountNumber === accountNumber && mc.status === 'Em andamento'
+            );
+            
+            if (activeCredit) {
+                alert('Esta conta já possui um microcrédito em andamento.');
+                return;
+            }
+            
+            const now = new Date();
+            const returnDate = new Date();
+            returnDate.setMonth(now.getMonth() + 1); // Due in 1 month
+            
+            microcredits.push({
+                accountNumber: accountNumber,
+                amount: amount,
+                requestDate: formatDate(now),
+                requestTime: formatTime(now),
+                returnDate: formatDate(returnDate),
+                status: 'Em andamento'
+            });
+            
+            account.balance += amount;
+            
+            // Add to history
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Microcrédito',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Solicitação de microcrédito de ${amount} MZN`
+            });
+            
+            document.getElementById('microcreditMsg').textContent = `Microcrédito de ${amount} MZN concedido para a conta ${accountNumber}. Data de devolução: ${formatDate(returnDate)}`;
+            document.getElementById('microcreditMsg').classList.remove('hidden');
+            
+            // Clear form and reload table
+            document.getElementById('microAccount').value = '';
+            document.getElementById('microAmount').value = '';
+            loadMicrocreditsTable();
+            
+            setTimeout(() => {
+                document.getElementById('microcreditMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Pay microcredit
+        function payMicrocredit() {
+            const accountNumber = document.getElementById('microAccount').value;
+            const amount = parseFloat(document.getElementById('microAmount').value);
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            const creditIndex = microcredits.findIndex(mc => 
+                mc.accountNumber === accountNumber && mc.status === 'Em andamento'
+            );
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            if (creditIndex === -1) {
+                alert('Nenhum microcrédito em andamento encontrado para esta conta.');
+                return;
+            }
+            
+            if (isNaN(amount) || amount <= 0) {
+                alert('Por favor, insira um valor válido.');
+                return;
+            }
+            
+            const credit = microcredits[creditIndex];
+            
+            if (amount > account.balance) {
+                alert('Saldo insuficiente para pagamento.');
+                return;
+            }
+            
+            account.balance -= amount;
+            credit.status = 'Pago';
+            
+            // Add to history
+            const now = new Date();
+            history.push({
+                accountNumber: accountNumber,
+                type: 'Pagamento Microcrédito',
+                amount: amount,
+                date: formatDate(now),
+                time: formatTime(now),
+                description: `Pagamento de microcrédito de ${amount} MZN`
+            });
+            
+            document.getElementById('microcreditMsg').textContent = `Pagamento de ${amount} MZN realizado para o microcrédito da conta ${accountNumber}.`;
+            document.getElementById('microcreditMsg').classList.remove('hidden');
+            
+            // Clear form and reload table
+            document.getElementById('microAccount').value = '';
+            document.getElementById('microAmount').value = '';
+            loadMicrocreditsTable();
+            
+            setTimeout(() => {
+                document.getElementById('microcreditMsg').classList.add('hidden');
+            }, 5000);
+        }
+        
+        // Load microcredits table
+        function loadMicrocreditsTable() {
+            const tableBody = document.getElementById('microcreditTableBody');
+            tableBody.innerHTML = '';
+            
+            if (microcredits.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="5" style="text-align: center;">Nenhum microcrédito registrado</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            microcredits.forEach(microcredit => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${microcredit.accountNumber}</td>
+                    <td>${microcredit.amount} MZN</td>
+                    <td>${microcredit.requestDate} ${microcredit.requestTime}</td>
+                    <td>${microcredit.returnDate}</td>
+                    <td>${microcredit.status}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Load client history
+        function loadHistory() {
+            const accountNumber = document.getElementById('historyAccount').value;
+            
+            const account = accounts.find(acc => acc.number === accountNumber);
+            
+            if (!account) {
+                alert('Conta não encontrada.');
+                return;
+            }
+            
+            const tableBody = document.getElementById('historyTableBody');
+            tableBody.innerHTML = '';
+            
+            const accountHistory = history.filter(item => item.accountNumber === accountNumber);
+            
+            if (accountHistory.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="5" style="text-align: center;">Nenhum histórico registrado</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            accountHistory.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.type}</td>
+                    <td>${item.amount} MZN</td>
+                    <td>${item.date}</td>
+                    <td>${item.time}</td>
+                    <td>${item.description}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Utility functions for date/time formatting
+        function formatDate(date) {
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        function formatTime(date) {
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+    </script>
+</body>
+</html>
+
